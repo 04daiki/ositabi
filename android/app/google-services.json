@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677449863581",
+    "project_id": "testositabi",
+    "storage_bucket": "testositabi.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677449863581:android:f18f3e5049e29232541f74",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgbPZTL-gbR8pL3ZlttoW5Vp0LnQYUhJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
