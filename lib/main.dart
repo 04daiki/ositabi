@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // Firebase 初期化用
 import 'firebase_options.dart'; // Firebase CLIで自動生成されたファイル
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'auth_gate.dart'; //ログインの有無を確認する
-import 'pan_list_screen.dart'; // パン一覧画面
+// import 'pan_list_screen.dart'; // パン一覧画面
 import 'register_page.dart'; //登録画面
 
 
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       home: const AuthGate(), // const を追加
       routes: {
         '/register': (context) => const RegisterPage(),
-        '/panList': (context) => PanListScreen(),
+        // '/panList': (context) => PanListScreen(),
       },
     );
   }
@@ -50,12 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // パン一覧画面へ遷移
-  void _goToPanList() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => PanListScreen()),
-    );
-  }
+  // void _goToPanList() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => PanListScreen()),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -72,10 +73,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/register');
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
               },
-              child: const Text('新規登録'),
+              child: const Text('ログアウト'),
             ),
             // ElevatedButton(
             //   onPressed: _goToPanList,
