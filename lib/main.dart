@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart'; // Firebase 初期化用
+import 'firebase_options.dart'; // Firebase CLIで自動生成されたファイル
+
+import 'auth_gate.dart'; //ログインの有無を確認する
 import 'pan_list_screen.dart'; // パン一覧画面
+import 'register_page.dart'; //登録画面
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Firebase を初期化
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  ); // Firebase を初期化
   runApp(const MyApp());
 }
 
@@ -16,7 +23,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(), // const を追加
+      home: const AuthGate(), // const を追加
+      routes: {
+        '/register': (context) => const RegisterPage(),
+        '/panList': (context) => PanListScreen(),
+      },
     );
   }
 }
@@ -61,9 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _goToPanList,
-              child: const Text('パン一覧を見る'),
+              onPressed: () {
+                Navigator.pushNamed(context, '/register');
+              },
+              child: const Text('新規登録'),
             ),
+            // ElevatedButton(
+            //   onPressed: _goToPanList,
+            //   child: const Text('パン一覧を見る'),
+            // ),
           ],
         ),
       ),
