@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'auth_utils.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,6 +18,10 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage = getJapaneseErrorMessage(e.code);
+      });
     } catch (e) {
       setState(() {
         _errorMessage = 'ログインに失敗しました';

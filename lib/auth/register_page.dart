@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'auth_utils.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -21,7 +22,11 @@ class _RegisterPageState extends State<RegisterPage> {
       );
       // 登録成功 → ログイン済み状態でパン一覧画面に遷移（例）
       Navigator.pushReplacementNamed(context, '/home');
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _errorMessage = getJapaneseErrorMessage(e.code);
+      });
+    }catch (e) {
       setState(() {
         _errorMessage = '登録に失敗しました: ${e.toString()}';
       });

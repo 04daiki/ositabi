@@ -3,9 +3,9 @@ import 'package:firebase_core/firebase_core.dart'; // Firebase 初期化用
 import 'firebase_options.dart'; // Firebase CLIで自動生成されたファイル
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'auth_gate.dart'; //ログインの有無を確認する
+import 'auth/auth_gate.dart'; //ログインの有無を確認する
 // import 'pan_list_screen.dart'; // パン一覧画面
-import 'register_page.dart'; //登録画面
+import 'auth/register_page.dart'; //登録画面
 
 
 void main() async {
