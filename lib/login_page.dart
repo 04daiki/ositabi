@@ -17,8 +17,6 @@ class _LoginPageState extends State<LoginPage> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // ログイン成功後の処理（例：ホーム画面に遷移）
-      Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
       setState(() {
         _errorMessage = 'ログインに失敗しました';

@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       home: const AuthGate(), // const を追加
       routes: {
         '/register': (context) => const RegisterPage(),
+        '/home' : (context) => const MyHomePage(),
         // '/panList': (context) => PanListScreen(),
       },
     );

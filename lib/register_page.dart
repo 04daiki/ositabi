@@ -20,7 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
         password: _passwordController.text.trim(),
       );
       // 登録成功 → ログイン済み状態でパン一覧画面に遷移（例）
-      Navigator.pushReplacementNamed(context, '/panList');
+      Navigator.pushReplacementNamed(context, '/home');
     } catch (e) {
       setState(() {
         _errorMessage = '登録に失敗しました: ${e.toString()}';
