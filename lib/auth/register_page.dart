@@ -14,13 +14,38 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   String? _errorMessage;
 
+  Future<bool?> _showConfirmDialog() async {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('確認'),
+        content: Text(
+          '以下の内容で登録しますか？\n\nメールアドレス: ${_emailController.text.trim()}',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('キャンセル'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('登録する'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _register() async {
+    final confirmed = await _showConfirmDialog();
+    if (confirmed != true) return; // キャンセルされたら中止
+    
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // 登録成功 → ログイン済み状態でパン一覧画面に遷移（例）
+      // 登録成功 → home画面
       Navigator.pushReplacementNamed(context, '/home');
     } on FirebaseAuthException catch (e) {
       setState(() {
