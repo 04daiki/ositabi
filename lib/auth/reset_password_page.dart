@@ -23,7 +23,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
       });
     } on FirebaseAuthException catch (e) {
       setState(() {
-        _message = '送信に失敗:' + getJapaneseErrorMessage(e.code);
+        _message = '送信に失敗: ${getJapaneseErrorMessage(e.code)}';
       });
     }
   }
