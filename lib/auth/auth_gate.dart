@@ -15,10 +15,18 @@ class AuthGate extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           //待ち状態のときは画面中央にアイコン表示
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
-        } else if (snapshot.hasData) {
-          return MyHomePage(); // ログイン済みならホーム画面へ
+        } 
+        final user = snapshot.data;
+
+        if (user != null) {
+          if (user.emailVerified) {
+            return const MyHomePage(); // 認証済みならホームへ
+          } else {
+            FirebaseAuth.instance.signOut(); // 未認証なら強制ログアウト
+            return  LoginPage(); // ログイン画面へ
+          }
         } else {
-          return LoginPage(); // 未ログインならログイン画面へ
+          return LoginPage(); // ログインしてない
         }
       },
     );

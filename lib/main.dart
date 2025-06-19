@@ -13,6 +13,10 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ); // Firebase を初期化
+
+  // Firebase Auth の言語設定を日本語にする
+  FirebaseAuth.instance.setLanguageCode('ja');
+  
   runApp(const MyApp());
 }
 

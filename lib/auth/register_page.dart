@@ -16,7 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<bool?> _showConfirmDialog() async {
     return showDialog<bool>(
-      context: context,
+      context: context, //どこの画面で表示するか
       builder: (context) => AlertDialog(
         title: const Text('確認'),
         content: Text(
@@ -39,14 +39,35 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _register() async {
     final confirmed = await _showConfirmDialog();
     if (confirmed != true) return; // キャンセルされたら中止
-    
+
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // 登録成功 → home画面
-      Navigator.pushReplacementNamed(context, '/home');
+      // 登録後に認証メールを送信
+      final user = userCredential.user;
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+
+        // 案内ダイアログを表示
+        await showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+            title: const Text('確認メールを送信しました'),
+            content: const Text('登録したメールアドレス宛に確認メールを送りました。メール内のリンクをクリックして認証してください。'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.pop(context); // RegisterPageから戻る
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
         _errorMessage = getJapaneseErrorMessage(e.code);

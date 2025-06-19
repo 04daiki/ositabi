@@ -14,10 +14,18 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> _login() async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+
+      if (!credential.user!.emailVerified) {
+        await FirebaseAuth.instance.signOut(); // 強制ログアウト
+
+        setState(() {
+          _errorMessage = 'メールアドレスが未確認です。確認メールをチェックしてください。';
+        });
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
         _errorMessage = getJapaneseErrorMessage(e.code);
