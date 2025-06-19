@@ -69,6 +69,12 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: const Text('新規登録はこちら'),
             ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/reset');
+              },
+              child: const Text('パスワードを忘れたときはこちら'),
+            ),
           ],
         ),
       ),

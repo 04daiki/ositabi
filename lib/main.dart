@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'auth/auth_gate.dart'; //ログインの有無を確認する
 // import 'pan_list_screen.dart'; // パン一覧画面
 import 'auth/register_page.dart'; //登録画面
+import 'auth/reset_password_page.dart';
 
 
 void main() async {
@@ -16,7 +17,7 @@ void main() async {
 
   // Firebase Auth の言語設定を日本語にする
   FirebaseAuth.instance.setLanguageCode('ja');
-  
+
   runApp(const MyApp());
 }
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/register': (context) => const RegisterPage(),
         '/home' : (context) => const MyHomePage(),
+        '/reset': (context) => const ResetPasswordPage(),
         // '/panList': (context) => PanListScreen(),
       },
     );
