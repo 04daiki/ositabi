@@ -44,10 +44,10 @@ Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       backgroundColor: const Color(0xFFFF8440),
-      // title: const Text(
-      //   'ログイン',
-      //   style: TextStyle(color: Colors.white),
-      // ),
+      title: const Text(
+        'ログイン',
+        style: TextStyle(color: Colors.white),
+      ),
       centerTitle: true,
       iconTheme: const IconThemeData(color: Colors.white),
     ),
@@ -73,6 +73,10 @@ Widget build(BuildContext context) {
                 ],
               ),
             ),
+            if (_errorMessage != null) ...[
+              Text(_errorMessage!, style: TextStyle(color: Colors.red)),
+              SizedBox(height: 8),
+            ],
             const Text('■ メールアドレス', style: TextStyle(fontSize: 16)),
             const SizedBox(height: 4),
             TextField(
