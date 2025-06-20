@@ -57,17 +57,14 @@ Widget build(BuildContext context) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Center(
+            Center(
               child: Column(
                 children: [
                   SizedBox(height: 60),
-                  Text(
-                    'アプリ\nアイコン',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Image.asset(
+                    'images/app_icon.png',
+                    width: 120,
+                    height: 120,
                   ),
                   SizedBox(height: 60),
                 ],
