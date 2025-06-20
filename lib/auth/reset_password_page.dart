@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'auth_utils.dart';
+import '../components/top_curve_clipper.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -31,32 +32,97 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('パスワード再設定')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const Text('登録済みのメールアドレスを入力してください。'),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'メールアドレス'),
+      body: Stack(
+        children: [
+          // 背景のカーブ AppBar
+          ClipPath(
+            clipper: TopCurveClipper(),
+            child: Container(
+              height: 80,
+              color: const Color(0xFFFF8440),
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _sendResetEmail,
-              child: const Text('送信'),
-            ),
-            if (_message != null) ...[
-              const SizedBox(height: 16),
-              Text(
-                _message!,
-                style: TextStyle(
-                  color: _message!.startsWith('送信に失敗') ? Colors.red : Colors.green,
-                ),
+          ),
+
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 戻るボタン
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white, size: 32),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  // カワウソ画像
+                  Center(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'images/app_icon.png', // 画像名を適宜変更
+                          width: 120,
+                          height: 120,
+                        ),
+                        const SizedBox(height: 24),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+                  const Text('■ 登録しているメールアドレス', style: TextStyle(fontSize: 16)),
+                  const SizedBox(height: 4),
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      hintText: 'sample@example.com',
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+
+                  const SizedBox(height: 24),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _sendResetEmail,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.orange,
+                        backgroundColor: Colors.white,
+                        side: const BorderSide(color: Colors.orange, width: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 16),
+                      ),
+                      child: const Text(
+                        'メールを送信',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (_message != null) ...[
+                    const SizedBox(height: 16),
+                    Center(
+                      child: Text(
+                        _message!,
+                        style: TextStyle(
+                          color: _message!.startsWith('送信に失敗') ? Colors.red : Colors.green,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
               ),
-            ],
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
